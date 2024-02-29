@@ -33,17 +33,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("user")
-                .password("password1")
+                .password("password")
                 .roles("USER")
                 .build());
 //        InMemoryUserDetailsManager manager2 = new InMemoryUserDetailsManager();
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("admin")
-                .password("password2")
+                .password("password")
                 .roles("ADMIN")
                 .build());
         return manager;
     }
+
+    /**
+     * Защита Spring Security
+     * @param http
+     * @throws Exception исключение
+     */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,9 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/public-data").authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/");
 
 //                .antMatchers("/private-data").hasAnyRole("ADMIN")
 //                .antMatchers("/public-data").hasAnyRole("USER")
