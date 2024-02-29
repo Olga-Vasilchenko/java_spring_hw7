@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("password")
                 .roles("USER")
                 .build());
-//        InMemoryUserDetailsManager manager2 = new InMemoryUserDetailsManager();
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("password")
@@ -46,23 +45,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Защита Spring Security
-     * @param http
-     * @throws Exception исключение
+     * Конфигурация защиты Spring Security
+     * @param http the {@Link HttpSecurity} to modify
+     * @throws Exception исключение безопасности
      */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-               .antMatchers("/private-data").hasAnyRole("ADMIN")
-               .antMatchers("/public-data").authenticated()
+                .antMatchers("/private-data").hasAnyRole("ADMIN")
+                .antMatchers("/public-data").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll()
+//                .permitAll()
+//                .loginProcessingUrl("/process_login")
+//                .defaultSuccessUrl("/public-data")
+//                .failureUrl("/login?error")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
+//                .and()
+//                .exceptionHandling();
+//                .accessDeniedPage("/access-denied");
+    }
+}
 
 //                .antMatchers("/private-data").hasAnyRole("ADMIN")
 //                .antMatchers("/public-data").hasAnyRole("USER")
@@ -73,5 +80,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .permitAll())
 //                .logout(logout -> logout
 //                        .logoutSuccessUrl("/"));
-   }
-}
+

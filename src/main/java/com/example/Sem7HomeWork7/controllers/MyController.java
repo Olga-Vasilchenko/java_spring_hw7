@@ -8,9 +8,9 @@ public class MyController {
 
     /**
      * Домашняя страница
-     * @return файл домашней страницы
+     * @return представление домашней страницы
      */
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(){
         return "home_page";
     }
@@ -32,6 +32,15 @@ public class MyController {
     public String adminPage(){
         return "private_page";
     }
+
+//    /**
+//     * Страница отказа в доступе
+//     * @return представление отказа в доступе
+//     */
+//    @GetMapping("/access-denied")
+//    public String accessDenied(){
+//        return "access_denied";
+//    }
 
     /**
      * Аутентификация пользователя
